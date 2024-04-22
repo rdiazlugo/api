@@ -5,9 +5,19 @@ export * as schema from "./schema";
 
 if (!process.env.DATABASE_URL) throw new Error("Missing env DATABASE_URL");
 
-const queryClient = postgres(process.env.DATABASE_URL);
-export const dbConnection = drizzle(queryClient);
+const CONNECTION_URL = process.env.DATABASE_URL;
+
+const sql = postgres(CONNECTION_URL, { max: 1 });
+export const dbConnection = drizzle(sql);
 
 export const runMigrations = async () => {
-  migrate(dbConnection, { migrationsFolder: "./db/migrations" });
+  try {
+    const migrationClient = postgres(CONNECTION_URL, { max: 1 });
+    await migrate(drizzle(migrationClient), {
+      migrationsFolder: "./db/migrations",
+    });
+    await migrationClient.end();
+  } catch (error) {
+    console.error("Error running migrations", error);
+  }
 };
