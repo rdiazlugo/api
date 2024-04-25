@@ -1,23 +1,21 @@
 import type { Context } from "@netlify/functions";
-import type { JSONObject } from "hono/utils/types";
-import habitica from "../../src/clients/habitica";
+import habitica, { USER_ID } from "../../src/clients/habitica";
 
-const USER_ID = Netlify.env.get("HABITICA_USER_ID");
-const API_TOKEN = Netlify.env.get("HABITICA_API_TOKEN");
+const isOwnStartedQuest = (type: string, data: any) =>
+  type === "questStarted" && data?.quest?.questOwner === USER_ID;
 
-const headers = {
-  "x-client": USER_ID + "-" + "rdiazlugo-api",
-  "x-api-user": USER_ID,
-  "x-api-key": API_TOKEN,
-};
-
-const handler = async (req: Request, ctx: Context, data: JSONObject) => {
+const handler = async (req: Request, ctx: Context, data: any) => {
   const { webhookType = "", type } = data || {};
   console.log({ webhookType, type });
   switch (webhookType) {
     case "questActivity":
       console.log(JSON.stringify(data, null, 2));
-      // await HabiticaClient.Quest.acceptByParty({ headers });
+
+      if (isOwnStartedQuest(type, data)) {
+        await habitica.Chat.sendGroupMessage({
+          body: { message: "Good luck with the quest everyone! 👋" },
+        });
+      }
       break;
 
     default:
