@@ -4,6 +4,8 @@ import habitica, { USER_ID } from "../../src/clients/habitica";
 const isOwnStartedQuest = (type: string, data: any) =>
   type === "questStarted" && data?.quest?.questOwner === USER_ID;
 
+const isQuestInvitation = (type: string) => type === "questInvited";
+
 const handler = async (req: Request, ctx: Context, data: any) => {
   const { webhookType = "", type } = data || {};
   console.log({ webhookType, type });
@@ -15,8 +17,11 @@ const handler = async (req: Request, ctx: Context, data: any) => {
         await habitica.Chat.sendGroupMessage({
           body: { message: "Good luck with the quest everyone! 👋" },
         });
+        return;
       }
-      break;
+      if (isQuestInvitation(type)) {
+        await habitica.Quest.acceptByParty();
+      }
 
     default:
       break;
