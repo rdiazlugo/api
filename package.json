@@ -16,9 +16,10 @@
   "dependencies": {
     "@netlify/functions": "^2.6.0",
     "discord-interactions": "^3.4.0",
-    "drizzle-orm": "^0.30.8",
+    "drizzle-orm": "^0.30.10",
     "hono": "^4.2.5",
     "mappersmith": "^2.43.4",
+    "nanoid": "^5.0.7",
     "postgres": "^3.4.4"
   }
 }
