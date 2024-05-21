@@ -3,8 +3,10 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
+    "dev": "bun --watch index.ts",
     "public": "bunx localtunnel --port 3001 --subdomain rdiazlugo-api",
-    "db:generate": "drizzle-kit generate:pg"
+    "db:generate": "drizzle-kit generate:pg --config=drizzle.config.ts",
+    "db:pull": "drizzle-kit introspect:pg --config=drizzle.config.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",
