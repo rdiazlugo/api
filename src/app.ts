@@ -1,13 +1,11 @@
 import { Hono } from "hono";
-import { bearerAuth } from "hono/bearer-auth";
 import api from "./api";
 import { runMigrations } from "../db";
-
-if (!process.env.key) throw new Error("Missing env key");
+import tokenMiddleware from "./middleware/token";
 
 await runMigrations();
 const app = new Hono();
-app.use(bearerAuth({ token: process.env.key }));
+app.use(tokenMiddleware);
 
 app.route("/api", api);
 
