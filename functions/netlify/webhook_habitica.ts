@@ -21,8 +21,11 @@ const handler = async (req: Request, ctx: Context, data: any) => {
       }
       if (isQuestInvitation(type)) {
         await habitica.Quest.acceptByParty();
+        await habitica.Chat.sendGroupMessage({
+          body: { message: "New quest, niice! 🎉" },
+        });
       }
-
+      break;
     default:
       break;
   }
