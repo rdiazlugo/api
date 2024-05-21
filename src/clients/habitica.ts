@@ -24,7 +24,8 @@ const HabiticaClient = forge({
     },
     Quest: {
       acceptByParty: {
-        path: "/groups/party/quests/accept",
+        path: "/groups/{groupId}/quests/accept",
+        params: { groupId: "party" },
         method: "post",
       },
     },
