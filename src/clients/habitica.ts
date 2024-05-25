@@ -1,8 +1,8 @@
-import forge, { type Middleware } from "mappersmith";
-import { EncodeJsonMiddleware, LogMiddleware } from "mappersmith/middleware";
+import forge, { type Middleware } from "mappersmith"
+import { EncodeJsonMiddleware, LogMiddleware } from "mappersmith/middleware"
 
-export const USER_ID = Netlify?.env.get("HABITICA_USER_ID") ?? "INVALID";
-const API_TOKEN = Netlify?.env.get("HABITICA_API_TOKEN") ?? "INVALID";
+export const USER_ID = Netlify?.env.get("HABITICA_USER_ID") ?? "INVALID"
+const API_TOKEN = Netlify?.env.get("HABITICA_API_TOKEN") ?? "INVALID"
 
 const AuthMiddleware: Middleware = () => ({
   prepareRequest(next) {
@@ -10,9 +10,9 @@ const AuthMiddleware: Middleware = () => ({
       request.enhance({
         headers: { "x-api-user": USER_ID, "x-api-key": API_TOKEN },
       })
-    );
+    )
   },
-});
+})
 
 const HabiticaClient = forge({
   host: "https://habitica.com/api/v3",
@@ -40,6 +40,6 @@ const HabiticaClient = forge({
       },
     },
   },
-});
+})
 
-export default HabiticaClient;
+export default HabiticaClient

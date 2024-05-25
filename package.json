@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "bun --watch index.ts",
-    "public": "bunx localtunnel --port 3001 --subdomain rdiazlugo-api"
+    "public": "bunx localtunnel --port 3001 --subdomain rdiazlugo-api",
+    "prettify": "bunx prettier --write ."
   },
   "devDependencies": {
     "@types/bun": "latest"
