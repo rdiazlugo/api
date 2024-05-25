@@ -4,24 +4,19 @@
   "type": "module",
   "scripts": {
     "dev": "bun --watch index.ts",
-    "public": "bunx localtunnel --port 3001 --subdomain rdiazlugo-api",
-    "db:generate": "drizzle-kit generate:pg --config=drizzle.config.ts",
-    "db:pull": "drizzle-kit introspect:pg --config=drizzle.config.ts"
+    "public": "bunx localtunnel --port 3001 --subdomain rdiazlugo-api"
   },
   "devDependencies": {
-    "@types/bun": "latest",
-    "drizzle-kit": "^0.20.16"
+    "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
   "dependencies": {
     "@netlify/functions": "^2.6.0",
+    "@rdiazlugo/db-schema": "0.0.5",
     "discord-interactions": "^3.4.0",
-    "drizzle-orm": "^0.30.10",
     "hono": "^4.2.5",
-    "mappersmith": "^2.43.4",
-    "nanoid": "^5.0.7",
-    "postgres": "^3.4.4"
+    "mappersmith": "^2.43.4"
   }
 }
